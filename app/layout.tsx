@@ -7,10 +7,18 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+// Load the Koulen font
+const koulen = localFont({
+  src: "./fonts/Koulen-Regular.ttf", // Update this path if needed
+  variable: "--font-koulen",
+  weight: "100 900", // You can specify the weight if needed
 });
 
 export const metadata: Metadata = {
@@ -26,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${koulen.variable} antialiased`}
       >
         {children}
       </body>
