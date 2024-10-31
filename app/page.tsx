@@ -15,6 +15,7 @@ export default function Home() {
     "Chelsea Boys",
     "Academy Ballers",
     "Futbol Is Life",
+    "Gunners"
   ]);
 
   // Create state to hold the selected teams for the header
