@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Capsule from './Capsule';
 
 interface HeaderProps {
