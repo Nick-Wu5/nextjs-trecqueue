@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ selectedTeams, time }) => {
   return (
-    <div className="header flex justify-center items-center w-full p-4 bg-gray-100 rounded mb-4">
+    <div className="header flex justify-center items-center w-full bg-gray-100 rounded mb-0 mt-0">
       {/* Wrapper for left capsule and line */}
       <div className="flex items-center mr-4">
         <Capsule text={selectedTeams.teamA} />
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ selectedTeams, time }) => {
       {/* Centered Timer and "Next Up" text */}
       <div className="flex flex-col items-center mx-6">
         <div
-          className="text-8xl font-bold leading-none mt-10"
+          className="text-8xl font-bold leading-none"
           style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
         >
           {time}

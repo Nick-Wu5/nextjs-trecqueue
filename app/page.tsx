@@ -10,12 +10,13 @@ export default function Home() {
   const [teams, setTeams] = useState<string[]>([
     "Boilermakers",
     "Pete's Footballers",
-    "Choo Choo",
-    "Team Spurs",
+    "Spurs",
+    "Gunners",
     "Chelsea Boys",
     "Academy Ballers",
     "Futbol Is Life",
-    "Gunners burh"
+    "Cole's Chippity Chip",
+    "Inter Miami"
   ]);
 
   const [selectedTeams, setSelectedTeams] = useState<{ teamA: string; teamB: string }>({
@@ -23,9 +24,9 @@ export default function Home() {
     teamB: teams[1],
   });
 
-  const addTeam = (newTeam: string) => {
-    setTeams([...teams, newTeam]); 
-  };
+  // Get the next 4 teams for the main list
+  const mainListTeams = teams.slice(2, 7);
+  const additionalTeamsCount = teams.length - 7;
 
   useEffect(() => {
     if (teams.length > 1) {
@@ -34,19 +35,29 @@ export default function Home() {
   }, [teams]);
   
   return (
-    <div className="main-container flex flex-col min-h-screen p-8 sm:p-20 font-[var(--font-koulen)]">
+    <div className="main-container flex flex-col min-h-screen pt-0 p-8 sm:p-20 font-[var(--font-koulen)]">
       
       <Header selectedTeams={selectedTeams} time="7:00" />
 
-      <main className="flex flex-col gap-8 items-center justify-center sm:items-start mt-3 flex-1">
-        <div className="w-full flex justify-center"> {/* Wrapper to center TeamList */}
-          <TeamList teams={teams.slice(2)} />
+      <main className="flex items-center flex-1">
+        {/* Left-aligned ClockDisplay, "TREC QUEUE" text, and Pete image */}
+        <div className="left-section">
+          <div className="flex flex-col items-center">
+            <img src="/purduePete.png" alt="Purdue Pete" className="footer-image-left" />
+            <ClockDisplay />
+          </div>
+        </div>
+
+        {/* Center-aligned TeamList */}
+        <div className="team-list-container flex flex-col items-center">
+          <TeamList teams={mainListTeams} additionalTeamsCount={additionalTeamsCount} />
+        </div>
+
+        {/* Right-aligned Purdue Rec logo */}
+        <div className="right-section">
+          <img src="/PurdueRecLogo.png" alt="Purdue Rec Logo" className="footer-image-right" />
         </div>
       </main>
-
-      <footer className="footer">
-        <ClockDisplay/>
-      </footer>
     </div>
   );
 }

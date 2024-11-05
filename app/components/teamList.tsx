@@ -1,6 +1,7 @@
 import React from 'react';
 import Capsule from './Capsule';
 
+
 /**
  * TeamList component renders a list of teams using the Capsule component.
  *
@@ -12,17 +13,26 @@ import Capsule from './Capsule';
  * @returns {JSX.Element} The rendered list of team capsules.
  */
 interface TeamListProps {
-  teams: string[]; // Accepts an array of team names as props
+  teams: string[];
+  additionalTeamsCount: number;
 }
 
-const TeamList: React.FC<TeamListProps> = ({ teams }) => {
+const TeamList: React.FC<TeamListProps> = ({ teams, additionalTeamsCount }) => {
   return (
-    <div className="flex flex-col items-center text-center gap-4">  {/* Flex container for stacking */}
+    <div className="flex flex-col items-center text-center gap-4">
+      {/* Render the provided teams (up to 5) as capsules */}
       {teams.map((team, index) => (
-        <div key={index} className="flex-shrink-0">  {/* Each team item */}
-          <Capsule text={team} />  {/* Render the Capsule for each team */}
+        <div key={index} className="flex-shrink">
+          <Capsule text={team} />
         </div>
       ))}
+      
+      {/* Conditionally render the "and x more teams..." capsule if there are additional teams */}
+      {additionalTeamsCount > 0 && (
+        <div className="flex-shrink-0">
+          <Capsule text={`and ${additionalTeamsCount} more teams...`} />
+        </div>
+      )}
     </div>
   );
 };

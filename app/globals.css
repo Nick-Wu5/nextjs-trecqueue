@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Root color variables */
 :root {
   --background: #F5F5F5;
   --foreground: #171717;
@@ -14,68 +15,106 @@
   }
 }
 
+/* Global body styling */
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-koulen), Arial, Helvetica, sans-serif;
 }
 
+/* Utility classes */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
+/* Capsule styling */
 .capsule {
   width: 402px;
   height: 70px;
-  border-radius: 15px;
-  background-color: #EBD99F;
+  margin: 5px; /* Optional: spacing between capsules */
+  font-size: 48px;
   color: black;
-  display: flex;  /* Use flexbox */
+  background-color: #EBD99F;
+  border-radius: 15px;
+  display: flex; /* Use flexbox */
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;  /* Prevent shrinking */
-  margin: 5px;  /* Optional: spacing between capsules */
-  font-size: 48px;
+  flex-shrink: 0; /* Prevent shrinking */
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); /* Add drop shadow */
 }
 
-/* Main container setup for full-height layout */
+/* Main container styling */
 .main-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh; /* Full viewport height */
 }
 
-/* Make other components in the main container grow to take up space */
-.main-container > *:not(.footer) {
-  flex: 1;
+/* Team list container styling */
+.team-list-container {
+  margin: 0 auto; /* Centers the team list within the flex layout */
 }
 
-/* Footer styling to place content in the bottom-left corner */
-.footer {
+/* Left section styling */
+.left-section {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: center;         /* Center items vertically */
-  padding: 16px;
-  width: 100%;
-  background-color: #f9f9f9; /* Optional background color */
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px; /* Adjust independently for left section */
+  margin-right: 180px;
 }
 
-/* ClockDisplay styling */
+/* Footer left image styling */
+.footer-image-left {
+  width: 50; /* Adjust size as needed */
+  height: auto;
+  margin-top: 8px; /* Space between text and image */
+}
+
+/* Clock display styling */
 .clock-display {
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align text to the left within the clock */
 }
 
+/* TREC text styling */
 .trec-text {
-  font-size: 1.2rem;
+  font-size: 48px;
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: -10px;
 }
 
+/* Time text styling */
 .time-text {
-  font-size: 1rem;
+  font-size: 36px;
+}
+
+/* Right section styling */
+.right-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 350px; /* Adjust independently for right section */
+  margin-left: 200px;
+}
+
+/* Footer text styling */
+.footer-text {
+  font-size: 2rem; /* Equivalent to text-3xl in Tailwind */
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+/* Footer right image styling */
+.footer-image-right {
+  width: 50; /* Adjust size as needed */
+  height: auto;
+  margin-left: auto;
 }

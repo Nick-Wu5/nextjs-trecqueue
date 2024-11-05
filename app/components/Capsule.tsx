@@ -13,11 +13,12 @@ import React from 'react';
  */
 interface CapsuleProps {
   text: string;
+  smallText?: boolean;
 }
 
 const Capsule: React.FC<CapsuleProps> = ({ text }) => {
   return (
-    <div className="capsule">
+    <div className={'capsule'}>
       {text}
     </div>
   );
