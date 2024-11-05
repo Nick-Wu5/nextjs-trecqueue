@@ -7,31 +7,41 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ selectedTeams, time }) => {
-
   return (
-    <div className="header flex justify-between items-center p-4 bg-gray-100 rounded mb-4">
-      <div className = "flex items-center">
-                
+    <div className="header flex justify-center items-center w-full p-4 bg-gray-100 rounded mb-4">
+      {/* Wrapper for left capsule and line */}
+      <div className="flex items-center mr-4">
         <Capsule text={selectedTeams.teamA} />
-        <div className="h-1 w-20 bg-black" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
-        ></div> {/* Line aligned with capsule */}
-      </div>
-      
-       {/* Center Timer and "Next Up" text */}
-       <div className="flex flex-col items-center mx-6">
-        <div className="text-8xl font-bold leading-none mt-10" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
-        >{time}</div>
-        <div className="text-3xl font-semibold mt-2" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
-        >NEXT UP</div>
-        
+        <div
+          className="h-1 w-20 bg-black ml-2"
+          style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
+        ></div>
       </div>
 
-      <div className = "flex items-center">
-        <div className="h-1 w-20 bg-black" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
-        ></div> {/* Line aligned with capsule */}
+      {/* Centered Timer and "Next Up" text */}
+      <div className="flex flex-col items-center mx-6">
+        <div
+          className="text-8xl font-bold leading-none mt-10"
+          style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
+        >
+          {time}
+        </div>
+        <div
+          className="text-3xl font-semibold mt-2"
+          style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
+        >
+          NEXT UP
+        </div>
+      </div>
+
+      {/* Wrapper for right line and capsule */}
+      <div className="flex items-center ml-4">
+        <div
+          className="h-1 w-20 bg-black mr-2"
+          style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}
+        ></div>
         <Capsule text={selectedTeams.teamB} />
       </div>
-      
     </div>
   );
 };

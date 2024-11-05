@@ -17,7 +17,7 @@ interface TeamListProps {
 
 const TeamList: React.FC<TeamListProps> = ({ teams }) => {
   return (
-    <div className="flex flex-col gap-4">  {/* Flex container for stacking */}
+    <div className="flex flex-col items-center text-center gap-4">  {/* Flex container for stacking */}
       {teams.map((team, index) => (
         <div key={index} className="flex-shrink-0">  {/* Each team item */}
           <Capsule text={team} />  {/* Render the Capsule for each team */}
