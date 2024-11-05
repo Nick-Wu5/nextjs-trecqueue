@@ -7,7 +7,7 @@ import ClockDisplay from './components/ClockDisplay';
 
 export default function Home() {
   
-  const [teams, setTeams] = useState<string[]>([
+  const [teams] = useState<string[]>([
     "Boilermakers",
     "Pete's Footballers",
     "Spurs",
