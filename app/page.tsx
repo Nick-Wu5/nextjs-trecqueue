@@ -8,15 +8,15 @@ import ClockDisplay from './components/ClockDisplay';
 export default function Home() {
   
   const [teams] = useState<string[]>([
-    "Boilermakers",
+    "Oil Money FC",
     "Pete's Footballers",
     "Spurs",
     "Gunners",
     "Chelsea Boys",
     "Academy Ballers",
     "Futbol Is Life",
-    "Cole's Chippity Chip",
-    "Inter Miami"
+    "Coach is Right",
+
   ]);
 
   const [selectedTeams, setSelectedTeams] = useState<{ teamA: string; teamB: string }>({
@@ -35,7 +35,7 @@ export default function Home() {
   }, [teams]);
   
   return (
-    <div className="main-container flex flex-col min-h-screen pt-0 p-8 sm:p-20 font-[var(--font-koulen)]">
+    <div className="main-container flex flex-col min-h-screen pt-0 p-5 sm:p-20 font-[var(--font-koulen)]" style={{paddingTop : "50px"}}>
       
       <Header selectedTeams={selectedTeams} time="7:00" />
 
