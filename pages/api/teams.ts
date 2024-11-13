@@ -4,7 +4,7 @@ import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next'; // Types for Next.js API routes
 
 // Type definitions from global.d.ts
-const filePath = path.resolve(process.cwd(), 'tmp/data/teams.json');
+const filePath = require('os').tmpdir() + "/teams.json";
 
 // Helper function to read the team list
 const readTeams = (): Team[] => {
@@ -19,6 +19,7 @@ const writeTeams = (teams: Team[]) => {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
+  console.log(filePath);
   console.log("test outside of if statement");
     if (req.method === 'GET') {
     // Fetch the current team list
