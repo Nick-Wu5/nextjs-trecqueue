@@ -57,6 +57,10 @@ body {
 /* Team list container styling */
 .team-list-container {
   margin: 0 auto; /* Centers the team list within the flex layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 600px;
 }
 
 /* Left section styling */

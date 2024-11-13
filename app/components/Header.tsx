@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ selectedTeams, time }) => {
       </div>
 
       {/* Centered Timer and "Next Up" text */}
-      <div className="flex flex-col items-center mx-6">
+      <div className="flex flex-col items-center mx-1">
         <div
           className="text-8xl font-bold leading-none"
           style={{ filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))' }}

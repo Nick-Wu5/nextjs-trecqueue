@@ -15,7 +15,7 @@ const ControlPage: React.FC = () => {
       return;
     }
 
-    await fetch('/api/team', {
+    await fetch('/api/teams', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: teamName, password: teamPassword }),
@@ -31,7 +31,7 @@ const ControlPage: React.FC = () => {
       return;
     }
 
-    const response = await fetch(`/api/team/${removeTeamId}`, {
+    const response = await fetch(`/api/teams/${removeTeamId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: removePassword }),
@@ -49,7 +49,7 @@ const ControlPage: React.FC = () => {
   };
 
   const handleStartNewGame = async () => {
-    await fetch('/api/game/start', {
+    await fetch('/api/start', {
       method: 'POST',
     });
   };
