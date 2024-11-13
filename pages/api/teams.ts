@@ -18,7 +18,8 @@ const writeTeams = (teams: Team[]) => {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  
+
+  console.log("test outside of if statement");
     if (req.method === 'GET') {
     // Fetch the current team list
     const teams = readTeams();
@@ -27,6 +28,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   } else if (req.method === 'POST') {
     // Add a new team
+    console.log("test within post");
     const { name, password } = req.body;
     const teams = readTeams();
     teams.push({ name, password, id: Date.now().toString() });
