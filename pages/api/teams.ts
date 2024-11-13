@@ -37,7 +37,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   } else if (req.method === 'DELETE') {
     // Remove a team by ID
     const { id, password } = req.body;
-    let teams = readTeams();
+    const teams = readTeams();
     const teamIndex = teams.findIndex((team: Team) => team.id === id && team.password === password);
 
     if (teamIndex === -1) {
