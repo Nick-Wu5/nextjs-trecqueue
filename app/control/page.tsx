@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { supabase } from '../../utils/supabase-js';
 
 const ControlPage: React.FC = () => {
   const [activePanel, setActivePanel] = useState<"add" | "remove" | null>(null);
