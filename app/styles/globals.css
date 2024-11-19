@@ -8,18 +8,15 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 /* Global body styling */
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-koulen), Arial, Helvetica, sans-serif;
+}
+
+button {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 /* Utility classes */
@@ -121,4 +118,18 @@ body {
   width: 50; /* Adjust size as needed */
   height: auto;
   margin-left: auto;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.game-status-line {
+  width: 350px; /* Adjust width as needed */
+  height: 4px;
+  margin: 50px;
+  background-color: black;
+  margin: 0 auto; /* Centers the line */
+  margin-top: 1rem; /* Adds space above the line */
+  margin-bottom: 1rem;
 }

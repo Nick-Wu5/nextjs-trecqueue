@@ -1,6 +1,7 @@
 // Define the Team type
 interface Team {
     id: string;
-    name: string;
+    teamName: string;
     password: string;
+    position: number;
 }
