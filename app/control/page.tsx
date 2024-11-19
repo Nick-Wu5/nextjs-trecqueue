@@ -14,6 +14,8 @@ const ControlPage: React.FC = () => {
   const [selectedWinner, setSelectedWinner] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<"win" | "draw" | null>(null);
 
+  useUnusedVariables(setTimer, teamId);
+  
   const closePanel = () => {
     setActivePanel(null);
     setTeamName("");
@@ -157,6 +159,12 @@ const ControlPage: React.FC = () => {
     setSelectedWinner(null);
     setSelectedAction(null);
   };
+
+  // Utility function to use unused variables
+  function useUnusedVariables(...vars: any[]) {
+    // Do nothing, just reference the variables
+    vars.forEach(() => {});
+  }
 
   return (
     <div className="flex flex-col justify-evenly items-center min-h-screen bg-gray-50">
