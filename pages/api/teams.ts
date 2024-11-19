@@ -19,7 +19,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Fetch and return the current team list
       console.log('Handling GET request');
       const teams = await readTeams();
-      console.log('Teams:', teams);
       return res.status(200).json(teams);
 
     } else if (req.method === 'POST') {
@@ -27,10 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log('Handling POST request');
       const { teamName, password } = req.body;
 
-      console.log('Request Body:', req.body);
-
       if (!teamName || !password) {
-        return res.status(400).json({ error: 'Team name and password are required' });
+        return res.status(200).json({ error: 'Team name and password are required' });
       }
 
       try {
@@ -55,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { teamName, password } = req.body;
     
         if (!teamName || !password) {
-          return res.status(400).json({ message: "Team name and password are required" });
+          return res.status(200).json({ message: "Team name and password are required" });
         }
     
         // Validate the password
@@ -66,11 +63,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .single();
     
         if (fetchError || !team) {
-          return res.status(404).json({ message: "Team not found" });
+          return res.status(200).json({ message: "Team not found" });
         }
     
         if (team.password !== password) {
-          return res.status(403).json({ message: "Incorrect password" });
+          return res.status(200).json({ message: "Incorrect password" });
         }
     
         // Delete the team
@@ -86,35 +83,70 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({ message: "Team deleted successfully" });
       } catch (error) {
         console.error("Error deleting team:", error);
-        return res.status(500).json({ message: "Failed to delete team", error });
+        return res.status(200).json({ message: "Failed to delete team", error });
       }
     } else if (req.method === 'PUT') {
       try {
-        const { orderedTeams } = req.body; // Expecting an array of objects: [{ id: "1", position: 1 }, ...]
+        const { orderedTeams, teamName, streak, resetAll } = req.body; // Get orderedTeams, teamName, and streak from request body
     
-        if (!orderedTeams || !Array.isArray(orderedTeams)) {
-          return res.status(400).json({ error: 'Invalid team order provided' });
+        if (resetAll) {
+          // Reset streaks for all teams
+          const { error } = await supabase
+            .from('teams')
+            .update({ streak: 0 })
+            .neq('id', 0);
+
+            console.log("reset streaks");
+      
+          if (error) {
+            console.error('Error resetting streaks:', error.message);
+            return res.status(500).json({ error: 'Failed to reset streaks for all teams' });
+          }
+        }
+
+        // Update team positions
+        if (orderedTeams) {
+          if (!Array.isArray(orderedTeams)) {
+            return res.status(200).json({ error: 'Invalid team order provided' });
+          }
+    
+          const updates = orderedTeams.map(({ id, position }) =>
+            supabase
+              .from('teams')
+              .update({ position })
+              .eq('id', id)
+          );
+          await Promise.all(updates);
+          console.log('Team positions updated in the database');
         }
     
-        // Update each team's position in the database
-        const updates = orderedTeams.map(({ id, position }) =>
-          supabase
+        // Update streak
+        if (teamName && typeof streak === 'number') {
+          const { data, error } = await supabase
             .from('teams')
-            .update({ position }) // Update the 'position' column
-            .eq('id', id)
-        );
+            .update({ streak })
+            .eq('teamName', teamName);
+
+            console.log("increased streaks");
     
-        // Wait for all updates to complete
-        await Promise.all(updates);
+          if (error) {
+            console.error('Error updating team streak:', error.message);
+            return res.status(500).json({ error: 'Failed to update team streak' });
+          }
     
-        res.status(200).json({ message: 'Team positions updated successfully' });
+          return res.status(200).json({ message: 'Team streak updated successfully', data });
+        }
+    
+        // Handle invalid request data
+        return res.status(200).json({ error: 'Invalid request data for updating streak or positions' });
       } catch (error) {
-        console.error('Error updating team positions:', error);
-        res.status(500).json({ error: 'Failed to update team positions' });
+        console.error('Error updating team positions or streak:', error);
+        return res.status(200).json({ error: 'Failed to update team positions or streak' });
       }
-    } else {
+    }
+     else {
       res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+      return res.status(200).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {
     console.error('API Error:', error);

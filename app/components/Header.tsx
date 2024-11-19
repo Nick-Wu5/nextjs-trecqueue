@@ -5,6 +5,7 @@ import WinStreak from './WinStreak';
 interface HeaderProps {
   selectedTeams: { teamA: string; teamB: string };
   time: string;
+  teamAStreak: number;
 }
 
 const Header: React.FC<HeaderProps & { teamAStreak: number }> = ({ selectedTeams, time, teamAStreak }) => {
@@ -12,7 +13,7 @@ const Header: React.FC<HeaderProps & { teamAStreak: number }> = ({ selectedTeams
     <div className="header flex justify-center items-center w-full bg-gray-100 rounded mb-0 mt-0">
       {/* Wrapper for left capsule and line */}
       <div className="flex items-center mr-4 relative">
-        <WinStreak streakCount={teamAStreak}/>
+        {teamAStreak > 0 && <WinStreak streakCount={teamAStreak} />}
         <Capsule text={selectedTeams.teamA} />
         <div
           className="h-1 w-20 bg-black ml-2"

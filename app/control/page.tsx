@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { supabase } from '../../utils/supabase-js';
 
 const ControlPage: React.FC = () => {
   const [activePanel, setActivePanel] = useState<"add" | "remove" | null>(null);
@@ -13,6 +14,7 @@ const ControlPage: React.FC = () => {
   const [confirmationVisible, setConfirmationVisible] = useState(false);
   const [selectedWinner, setSelectedWinner] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<"win" | "draw" | null>(null);
+  const [teamAStreak, setTeamAStreak] = useState(0);
 
   useUnusedVariables(setTimer, teamId);
 
@@ -98,49 +100,66 @@ const ControlPage: React.FC = () => {
 
   const handleTeamOrderUpdate = async (action: "win" | "draw", winner: string | null) => {
     let updatedTeams = [...teams];
+    let updatedStreak = teamAStreak;
   
+    const resetAll = action === "draw" || (action === "win" && winner !== updatedTeams[0]?.teamName);
+
     if (action === "win" && winner) {
       const winningTeam = updatedTeams.find((team) => team.teamName === winner);
       if (winningTeam) {
-        // Remove the winning team from the list
-        updatedTeams = updatedTeams.filter((team) => team !== winningTeam);
-        
-        // Move the second team to the bottom of the list
-        const secondTeam = updatedTeams[0]; // The second team is now at the top
-        updatedTeams = updatedTeams.slice(1); // Remove the second team
-        updatedTeams.push(secondTeam); // Add it to the bottom
+        // Increment or reset streak
+        updatedStreak = winningTeam.teamName === updatedTeams[0].teamName ? updatedStreak + 1 : 1;
   
-        // Place the winning team at the top
-        updatedTeams.unshift(winningTeam);
+        // Reorder teams
+        updatedTeams = updatedTeams.filter((team) => team.teamName !== winner);
+        const secondTeam = updatedTeams.shift(); // Remove the first team
+        updatedTeams.push(secondTeam!); // Add it to the bottom
+        updatedTeams.unshift(winningTeam); // Add winning team to the top
       }
     } else if (action === "draw") {
-      const [teamA, teamB] = updatedTeams.splice(0, 2); // Get the top two teams
-      updatedTeams.push(teamB, teamA); // Move them to the end in reverse order
+      updatedStreak = 0; // Reset streak on draw
+      const [teamA, teamB] = updatedTeams.splice(0, 2); // Get top two teams
+      updatedTeams.push(teamB, teamA); // Swap and move to the end
     }
   
     setTeams(updatedTeams);
+    setTeamAStreak(updatedStreak);
   
-    // Update backend with new order
+    // Prepare data for API
     const orderedTeams = updatedTeams.map((team, index) => ({
       id: team.id,
-      position: index + 1, // Positions are 1-based
+      position: index + 1,
     }));
+
+    console.log('Sending update to API:', {
+      orderedTeams,
+      teamName: winner,
+      streak: updatedStreak,
+      resetAll,
+    });
   
     try {
+      // Update positions and streak in the backend
       const response = await fetch("/api/teams", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ orderedTeams }),
+        body: JSON.stringify({
+          orderedTeams,
+          teamName: winner,
+          streak: updatedStreak,
+          resetAll,
+        }),
       });
   
       if (!response.ok) {
-        throw new Error("Failed to update team positions in the database");
+        throw new Error("Failed to update team positions or streak in the database");
       }
-      console.log("Team positions updated successfully");
+  
+      console.log("Team positions and streak updated successfully");
     } catch (error) {
-      console.error("Error updating team positions:", error);
+      console.error("Error updating team positions or streak:", error);
     }
   
     setConfirmationVisible(false);

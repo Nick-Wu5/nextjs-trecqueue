@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import TeamList from "./components/teamList";
 import Header from "./components/Header";
 import ClockDisplay from "./components/ClockDisplay";
+import { supabase } from '../utils/supabase-js';
 
 export default function Home() {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -11,6 +12,7 @@ export default function Home() {
     teamA: "",
     teamB: "",
   });
+  const [teamAStreak, setTeamAStreak] = useState(0);
 
   // Fetch teams from the backend
   const fetchTeams = async () => {
@@ -43,12 +45,48 @@ export default function Home() {
     }
   }, [teams]);
 
+  useEffect(() => {
+    const fetchStreak = async () => {
+      try {
+        const teamA = teams[0]?.teamName; // Get the current teamA's name
+        if (!teamA) return;
+    
+        const { data, error } = await supabase
+          .from('teams') // Ensure this matches your Supabase table name
+          .select('streak')
+          .eq('teamName', teamA);
+    
+        if (error) {
+          console.error('Error fetching streak:', error.message);
+          return;
+        }
+    
+        if (data && data.length > 0) {
+          setTeamAStreak(data[0].streak); // Update the streak state
+        } else {
+          setTeamAStreak(0); // Default to 0 if no streak is found
+        }
+      } catch (err) {
+        console.error('Error fetching streak:', err);
+      }
+    };
+  
+    // Initial fetch
+    fetchStreak();
+
+    // Poll every 3 seconds
+    const intervalId = setInterval(fetchStreak, 200);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [teams[0]?.teamName]); // Dependency on teamA  
+
   const mainListTeams = teams.slice(2, 7).map((team) => team.teamName);
   const additionalTeamsCount = teams.length - 7;
 
   return (
     <div className="main-container flex flex-col min-h-screen p-5 sm:p-20">
-      <Header selectedTeams={selectedTeams} time="7:00" teamAStreak={0} />
+      <Header selectedTeams={selectedTeams} time="7:00" teamAStreak={teamAStreak} />
       <main className="flex items-center flex-1">
         <div className="left-section">
           <img src="/purduePete.png" alt="Purdue Pete" className="footer-image-left" />

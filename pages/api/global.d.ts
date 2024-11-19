@@ -4,4 +4,5 @@ interface Team {
     teamName: string;
     password: string;
     position: number;
+    streak: number;
 }
