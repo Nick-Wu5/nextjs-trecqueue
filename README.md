@@ -1,6 +1,8 @@
 # TREC Team Queue
 
-TREC Team Queue is a dynamic dual-interface React application designed to increase the efficiency of team rotations within the Purdue indoor pickup soccer facility turf recreational (TREC) building.
+TREC Team Queue is a dynamic dual-interface React application designed to increase the efficiency of team rotations within the Purdue indoor pickup soccer facility turf recreational (TREC) building. 
+
+As a regular participant in the facility, I noticed a significant lack of structure when it came to rotating teams. This often led to constant arguments, confusion, and time inefficiency, detracting from the overall experience. I designed TREC Team Queue to streamline team management, reduce conflicts, and create a more enjoyable and efficient environment for everyone involved.
 
 ## Features
 
