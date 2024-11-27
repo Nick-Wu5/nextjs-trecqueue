@@ -21,3 +21,11 @@ TREC Team Queue is a dynamic dual-interface React application designed to increa
 - **CSS**: Custom styling for responsive and polished UI.
 - **Vercel**: For hosting and deploying the application.
 - **Supabase**: Backend solution for managing team and queue information with real-time database capabilities.
+
+## Live Demo
+
+Visit the live hosted project at [nextjs-trecqueue.vercel.app](https://nextjs-trecqueue.vercel.app).
+
+- **TV Display**: The default view shows the TV display interface.
+- **Control Page**: Add `/control` to the URL to access the iPad check-in interface:
+  [nextjs-trecqueue.vercel.app/control](https://nextjs-trecqueue.vercel.app/control).
